@@ -39,7 +39,8 @@ Write a function:
 
     struct Results solution(int N, int A[], int M);
 
-that, given an integer N and a non-empty zero-indexed array A consisting of M integers, returns a sequence of integers representing the values of the counters.
+that, given an integer N and a non-empty zero-indexed array A consisting of M integers, 
+returns a sequence of integers representing the values of the counters.
 
 The sequence should be returned as:
 
@@ -67,13 +68,68 @@ Assume that:
 Complexity:
 
         expected worst-case time complexity is O(N+M);
-        expected worst-case space complexity is O(N), beyond input storage (not counting the storage required for input arguments).
+        expected worst-case space complexity is O(N), 
+	beyond input storage (not counting the storage required for input arguments).
 
 Elements of input arrays can be modified.*/
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct Results
+{
+	int *C;
+	int L;
+};
+
+struct Results solution(int N, int A[], int M);
 
 void main(void)
 {
+	int A[] = {3 ,4, 4, 6, 1, 4, 4};
+	int M = 7;
+	int N = 5;
 
+	struct Results results = solution(N, A, M);
+
+	int i;
+	for(i = 0; i < results.L; i++)
+	{
+		printf("%d", results.C[i]);
+	}
+	printf("\n");
 }
+
+struct Results solution(int N, int A[], int M)
+{
+	struct Results result;
+	result.L = N;
+	result.C = (int *)calloc(N, sizeof(int));	
+
+	int max = 0;
+
+	int i, j;
+	for(i = 0; i < M; i++)
+	{
+		if(A[i] >=1 && A[i] <= N)
+		{
+			result.C[A[i]-1]++;
+		
+			if(max < result.C[A[i]-1])
+				max = result.C[A[i]-1];	
+		}	
+
+		else if(A[i] == N + 1)
+		{	
+			for(j = 0; j < N; j++)
+			{
+				result.C[j] = max;
+			}
+		}
+	}
+
+	return result;
+}
+
+
