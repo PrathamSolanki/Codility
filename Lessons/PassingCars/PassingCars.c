@@ -62,7 +62,7 @@ void main(void)
 
 int solution(int A[], int N)
 {
-	int count = 0;
+	unsigned int count = 0;
 
 	int i;
 
